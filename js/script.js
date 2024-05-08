@@ -11,7 +11,6 @@ class Engine
     constructor(canvas){
         this.canvas = canvas;
         this.gl = canvas.getContext("webgl2");
-        let gl = this.gl;
 
         this.program = null;
         this.vertexShader = null;
