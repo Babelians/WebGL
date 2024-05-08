@@ -7,4 +7,6 @@ class Component{
     update(){
 
     }
+
+    updateVertices(){}
 }

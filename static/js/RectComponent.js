@@ -13,7 +13,7 @@ class RectComponent extends Component{
         this.height = height;
     }
 
-    update(){
+    updateVertices(){
         const ownerPos = this.owner.position;
         let vertices = [
             ownerPos.x - this.width / 2, ownerPos.y - this.height / 2, 0,
@@ -22,8 +22,6 @@ class RectComponent extends Component{
             ownerPos.x + this.width / 2, ownerPos.y + this.height / 2, 0
         ];
         this.owner.vertices = vertices;
-
-        console.log("new vert",this.owner.vertices);
     }
 
     setSize(width, height){
@@ -38,12 +36,13 @@ class RectComponent extends Component{
 
     setColor(colorVec){
         let newColor = [];
-        for(let i = 0; i < this.owner.vertices.length / 3; ++i){
+        for(let i = 0; i < 4; ++i){
             newColor.push(colorVec.x);
             newColor.push(colorVec.y);
             newColor.push(colorVec.z);
             newColor.push(colorVec.w);
         }
         this.owner.color = newColor;
+        console.log(this.owner.color);
     }
 }

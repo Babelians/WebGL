@@ -9,7 +9,6 @@ class Entity{
         this.indices = [];
         this.color = [];
         this.vao = null;
-        this.ibo = null;
     }
 
     addComponent(component){
@@ -20,7 +19,7 @@ class Entity{
         this.position = posVec;
 
         for(let component of this.components){
-            component.update();
+            component.updateVertices();
         }
     }
 
