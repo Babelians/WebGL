@@ -24,29 +24,5 @@ class Entity{
         }
     }
 
-    getPosition(){return this.position;}
-
-    getEngine(){return this.engine;}
-
-    setVertices(vertices){this.vertices = vertices;}
-
-    getVertices(){return this.vertices;}
-
-    setIndices(indices){this.indices = indices;}
-
-    getIndices(){return this.indices;}
-
-    setColor(colorVec){ this.color = colorVec; }
-
-    getColor(){return this.color;}
-
-    setVao(vao){this.vao = vao;}
-
-    getVao(){return this.vao;}
-
-    setIbo(ibo){this.ibo = ibo;}
-
-    getIbo(){return this.ibo;}
-
     update(){}
 }

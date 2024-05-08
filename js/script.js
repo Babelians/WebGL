@@ -61,14 +61,13 @@ class Engine
         let gl = this.gl;
 
         for(let entity of this.entities){
-            console.log("entity",entity);
-            entity.setVao(gl.createVertexArray());
-            gl.bindVertexArray(entity.getVao());
+            entity.vao = gl.createVertexArray();
+            gl.bindVertexArray(entity.vao);
     
             // 頂点
             const vertexBuffer = gl.createBuffer();
             gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
-            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(entity.getVertices()), gl.STATIC_DRAW);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(entity.vertices), gl.STATIC_DRAW);
             gl.enableVertexAttribArray(this.program.aVertexPosition);
             gl.vertexAttribPointer(this.program.aVertexPosition, 3, gl.FLOAT, false, 0, 0);
     
@@ -81,13 +80,13 @@ class Engine
             gl.vertexAttribPointer(this.program.aVertexNormal, 3, gl.FLOAT, false, 0, 0);
     
             // インデックス
-            entity.setIbo(gl.createBuffer());
-            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, entity.getIbo());
-            gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(entity.getIndices()), gl.STATIC_DRAW);
+            entity.ibo = gl.createBuffer();
+            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, entity.ibo);
+            gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(entity.indices), gl.STATIC_DRAW);
 
             const colorBuffer = gl.createBuffer();
             gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(entity.getColor()), gl.STATIC_DRAW);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(entity.color), gl.STATIC_DRAW);
             gl.enableVertexAttribArray(this.program.aVertexColor);
             gl.vertexAttribPointer(this.program.aVertexColor, 4, gl.FLOAT, false, 0, 0);
     
@@ -121,11 +120,11 @@ class Engine
         try {
             for(let entity of this.entities){
                 // Bind
-                gl.bindVertexArray(entity.getVao());
+                gl.bindVertexArray(entity.vao);
                 //gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, entity.getIbo());
         
                 // Draw
-                gl.drawElements(gl.TRIANGLES, entity.getIndices().length, gl.UNSIGNED_SHORT, 0);
+                gl.drawElements(gl.TRIANGLES, entity.indices.length, gl.UNSIGNED_SHORT, 0);
         
                 // Clean
                 gl.bindVertexArray(null);
