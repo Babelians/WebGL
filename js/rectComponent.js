@@ -42,7 +42,7 @@ class RectComponent extends Component{
             newColor.push(colorVec.x);
             newColor.push(colorVec.y);
             newColor.push(colorVec.z);
-            newColor.push(colorVec.a);
+            newColor.push(colorVec.w);
         }
         this.owner.setColor(newColor);
     }

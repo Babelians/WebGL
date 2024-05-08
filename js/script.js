@@ -177,7 +177,10 @@ class Engine
         this.program.uLightDirection = gl.getUniformLocation(this.program, 'uLightDirection');
         this.program.uLightAmbient = gl.getUniformLocation(this.program, 'uLightAmbient');
         this.program.uLightDiffuse = gl.getUniformLocation(this.program, 'uLightDiffuse');
+        this.program.uLightSpecular = gl.getUniformLocation(this.program, 'uLightSpecular');
+        this.program.uMaterialAmbient = gl.getUniformLocation(this.program, 'uMaterialAmbient');
         this.program.uMaterialDiffuse = gl.getUniformLocation(this.program, 'uMaterialDiffuse');
+        this.program.uMaterialSpecular = gl.getUniformLocation(this.program, 'uMaterialSpecular');
     }
     
     createShader(id){

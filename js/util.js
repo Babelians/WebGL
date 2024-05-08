@@ -102,10 +102,10 @@ class Vec3{
 }
 
 class Vec4{
-    constructor(x, y, z, a){
+    constructor(x, y, z, w){
         this.x = x;
         this.y = y;
         this.z = z;
-        this.a = a;
+        this.w = w;
     }
 }
