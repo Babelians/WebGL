@@ -1,10 +1,12 @@
 class ModelComponent extends Component{
     constructor(entity){
         super(entity);
+        this.className = "ModelComponent";
     }
 
     loadModel(filePath){
-        return fetch(filePath)
+        this.owner.modelLoading = true;
+        fetch(filePath)
 
         .then(res=>res.json())
 
@@ -18,9 +20,12 @@ class ModelComponent extends Component{
                 this.owner.color.push(1);
                 this.owner.color.push(1);
             }
+            this.owner.modelLoading = false;
+
+            this.owner.engine.createSingleBuffer(this.owner);
         })
 
-        .catch((err) => console.error(err, ...arguments));
+        .catch((err) => console.error(err));
     }
 
     setColor(colorVec){

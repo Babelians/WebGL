@@ -9,6 +9,7 @@ class Entity{
         this.indices = [];
         this.color = [];
         this.vao = null;
+        this.modelLoading = false;
     }
 
     addComponent(component){

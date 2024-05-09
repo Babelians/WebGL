@@ -4,6 +4,7 @@ onload = function(){
     canvas.height = 300;
     let engine = new Engine(canvas);
     engine.initialize();
+    engine.run();
 }
 
 class Engine
@@ -37,11 +38,14 @@ class Engine
         this.initBuffer();
 
         this.initLights();
+    }
 
+    run(){
         this.render();
     }
 
     render(){
+        window.requestAnimationFrame(this.render);
         this.draw();
     }
 
@@ -55,50 +59,58 @@ class Engine
         rect.setColor(new Vec4(0,1,0,1));
 
         let rect2 = new Rect(this);
-        rect2.setPosition(new Vec3(0,0,0));*/
+        rect2.setPosition(new Vec3(0,0,0));
+        rect2.setColor(new Vec4(1,1,0,1));*/
 
-        let ball = new Entity(this);
-        let mc = new ModelComponent(ball);
-        mc.loadModel("../../static/models/sphere2.json");
+        let ball = new Ball(this);
+
+        let cone = new Cone(this);
+    }
+
+    createSingleBuffer(entity){
+        let gl = this.gl;
+
+        entity.vao = gl.createVertexArray();
+        gl.bindVertexArray(entity.vao);
+
+        // 頂点
+        const vertexBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(entity.vertices), gl.STATIC_DRAW);
+        gl.enableVertexAttribArray(this.program.aVertexPosition);
+        gl.vertexAttribPointer(this.program.aVertexPosition, 3, gl.FLOAT, false, 0, 0);
+
+        // 法線
+        let norms = util.calcNormls(entity.vertices, entity.indices);
+        this.normBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.normBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(norms), gl.STATIC_DRAW);
+        gl.enableVertexAttribArray(this.program.aVertexNormal);
+        gl.vertexAttribPointer(this.program.aVertexNormal, 3, gl.FLOAT, false, 0, 0);
+
+        // インデックス
+        let ibo = gl.createBuffer();
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ibo);
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(entity.indices), gl.STATIC_DRAW);
+
+        const colorBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(entity.color), gl.STATIC_DRAW);
+        gl.enableVertexAttribArray(this.program.aVertexColor);
+        gl.vertexAttribPointer(this.program.aVertexColor, 4, gl.FLOAT, false, 0, 0);
+
+        //無効化
+        gl.bindVertexArray(null);
+        gl.bindBuffer(gl.ARRAY_BUFFER, null);
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
     }
 
     initBuffer(){
         let gl = this.gl;
 
+        // TODO ModelComponentを持つEntityはすでにバインド済みだが、全部バインドさせている。
         for(let entity of this.entities){
-            entity.vao = gl.createVertexArray();
-            gl.bindVertexArray(entity.vao);
-    
-            // 頂点
-            const vertexBuffer = gl.createBuffer();
-            gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
-            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(entity.vertices), gl.STATIC_DRAW);
-            gl.enableVertexAttribArray(this.program.aVertexPosition);
-            gl.vertexAttribPointer(this.program.aVertexPosition, 3, gl.FLOAT, false, 0, 0);
-    
-            // 法線
-            let norms = util.calcNormls(entity.vertices, entity.indices);
-            this.normBuffer = gl.createBuffer();
-            gl.bindBuffer(gl.ARRAY_BUFFER, this.normBuffer);
-            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(norms), gl.STATIC_DRAW);
-            gl.enableVertexAttribArray(this.program.aVertexNormal);
-            gl.vertexAttribPointer(this.program.aVertexNormal, 3, gl.FLOAT, false, 0, 0);
-    
-            // インデックス
-            let ibo = gl.createBuffer();
-            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ibo);
-            gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(entity.indices), gl.STATIC_DRAW);
-
-            const colorBuffer = gl.createBuffer();
-            gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(entity.color), gl.STATIC_DRAW);
-            gl.enableVertexAttribArray(this.program.aVertexColor);
-            gl.vertexAttribPointer(this.program.aVertexColor, 4, gl.FLOAT, false, 0, 0);
-    
-            //無効化
-            gl.bindVertexArray(null);
-            gl.bindBuffer(gl.ARRAY_BUFFER, null);
-            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
+            this.createSingleBuffer(entity);
         }
     }
 
@@ -109,28 +121,26 @@ class Engine
         gl.viewport(0, 0, width, height);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
+        
         mat4.perspective(this.projectionMatrix, 45 * (Math.PI / 180), width / height, 0.1, 10000);
         mat4.identity(this.modelViewMatrix);
-        mat4.translate(this.modelViewMatrix, this.modelViewMatrix, [0, 0, -40]);
+        mat4.translate(this.modelViewMatrix, this.modelViewMatrix, [0, 0, -5]);
 
         mat4.copy(this.normalMatrix, this.modelViewMatrix);
         mat4.invert(this.normalMatrix, this.normalMatrix);
         mat4.transpose(this.normalMatrix, this.normalMatrix);
 
         gl.uniformMatrix4fv(this.program.uModelViewMatrix, false, this.modelViewMatrix);
-        gl.uniformMatrix4fv(this.program.uNormalMatrix, false, this.normalMatrix);
+        //gl.uniformMatrix4fv(this.program.uNormalMatrix, false, this.normalMatrix);
         gl.uniformMatrix4fv(this.program.uProjectionMatrix, false, this.projectionMatrix);
   
         // We will start using the `try/catch` to capture any errors from our `draw` calls
         try {
             for(let entity of this.entities){
-                console.log(entity);
                 // Bind
                 gl.bindVertexArray(entity.vao);
-                //gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, entity.getIbo());
-        
                 // Draw
-                gl.drawElements(gl.TRIANGLES, entity.indices.length, gl.UNSIGNED_SHORT, 0);
+                gl.drawElements(gl.LINE_LOOP, entity.indices.length, gl.UNSIGNED_SHORT, 0);
         
                 // Clean
                 gl.bindVertexArray(null);
@@ -157,7 +167,6 @@ class Engine
         gl.clearColor(0, 0, 0, 1);
         gl.clearDepth(100);
         gl.enable(gl.DEPTH_TEST);
-        gl.depthFunc(gl.LEQUAL);
 
         this.program = gl.createProgram();
         gl.attachShader(this.program, vertexShader);
