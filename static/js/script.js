@@ -1,7 +1,7 @@
 onload = function(){
     let canvas = document.getElementById("canvas");
-    canvas.width = 500;
-    canvas.height = 300;
+    canvas.width = 800;
+    canvas.height = 500;
     let engine = new Engine(canvas);
     engine.initialize();
     engine.run();
@@ -32,7 +32,7 @@ class Engine
         this.lightAmbient = [0.03, 0.03, 0.03, 1];
         this.lightSpecular = [1, 1, 1, 1];
         this.lightDirection = [-0.25, -0.25, -0.25];
-        this.materialDiffuse = [46 / 256, 99 / 256, 191 / 256, 1];
+        this.materialDiffuse = [1 / 256, 1 / 256, 200 / 256, 1];
         this.materialAmbient = [1, 1, 1, 1];
         this.materialSpecular = [1, 1, 1, 1];
     }
@@ -193,20 +193,20 @@ class Engine
 
         gl.useProgram(this.program);
 
-        this.program.aVertexPosition = gl.getAttribLocation(this.program, 'aVertexPosition');
-        this.program.aVertexNormal = gl.getAttribLocation(this.program, 'aVertexNormal');
-        this.program.aVertexColor = gl.getAttribLocation(this.program, 'aVertexColor');
+        this.program.aVertexPosition   = gl.getAttribLocation(this.program, 'aVertexPosition');
+        this.program.aVertexNormal     = gl.getAttribLocation(this.program, 'aVertexNormal');
+        this.program.aVertexColor      = gl.getAttribLocation(this.program, 'aVertexColor');
         this.program.uProjectionMatrix = gl.getUniformLocation(this.program, 'uProjectionMatrix');
-        this.program.uModelViewMatrix = gl.getUniformLocation(this.program, 'uModelViewMatrix');
-        this.program.uNormalMatrix = gl.getUniformLocation(this.program, 'uNormalMatrix');
-        this.program.uLightDirection = gl.getUniformLocation(this.program, 'uLightDirection');
-        this.program.uLightAmbient = gl.getUniformLocation(this.program, 'uLightAmbient');
-        this.program.uLightDiffuse = gl.getUniformLocation(this.program, 'uLightDiffuse');
-        this.program.uLightSpecular = gl.getUniformLocation(this.program, 'uLightSpecular');
-        this.program.uMaterialAmbient = gl.getUniformLocation(this.program, 'uMaterialAmbient');
-        this.program.uMaterialDiffuse = gl.getUniformLocation(this.program, 'uMaterialDiffuse');
+        this.program.uModelViewMatrix  = gl.getUniformLocation(this.program, 'uModelViewMatrix');
+        this.program.uNormalMatrix     = gl.getUniformLocation(this.program, 'uNormalMatrix');
+        this.program.uLightDirection   = gl.getUniformLocation(this.program, 'uLightDirection');
+        this.program.uLightAmbient     = gl.getUniformLocation(this.program, 'uLightAmbient');
+        this.program.uLightDiffuse     = gl.getUniformLocation(this.program, 'uLightDiffuse');
+        this.program.uLightSpecular    = gl.getUniformLocation(this.program, 'uLightSpecular');
+        this.program.uMaterialAmbient  = gl.getUniformLocation(this.program, 'uMaterialAmbient');
+        this.program.uMaterialDiffuse  = gl.getUniformLocation(this.program, 'uMaterialDiffuse');
         this.program.uMaterialSpecular = gl.getUniformLocation(this.program, 'uMaterialSpecular');
-        this.program.uShininess = gl.getUniformLocation(this.program, 'uShininess');
+        this.program.uShininess        = gl.getUniformLocation(this.program, 'uShininess');
     }
     
     createShader(id){
