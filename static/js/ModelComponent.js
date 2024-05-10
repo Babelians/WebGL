@@ -17,8 +17,8 @@ class ModelComponent extends Component{
             for(let i = 0; i < this.owner.vertices.length/3; ++i){
                 this.owner.color.push(0);
                 this.owner.color.push(0);
-                this.owner.color.push(1);
-                this.owner.color.push(1);
+                this.owner.color.push(0);
+                this.owner.color.push(0);
             }
             this.owner.modelLoading = false;
 
