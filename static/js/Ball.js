@@ -4,6 +4,6 @@ class Ball extends Entity{
 
 
         let mc = new ModelComponent(this);
-        mc.loadModel("../../static/models/sphere2.json");
+        mc.loadModel("../../static/models/ball.json");
     }
 }

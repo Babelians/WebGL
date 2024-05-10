@@ -73,7 +73,7 @@
                     float specular = pow(max(dot(R, E), 0.0), uShininess);
                     Is = uLightSpecular * uMaterialSpecular * specular;
                 }
-                fragColor = vColor + vec4(vec3(Ia + Id + Is), 1.0);
+                fragColor = vec4(vec3(Ia + Id + Is), 1.0); //2Dの場合vColor
             }
         </script>
     </head>

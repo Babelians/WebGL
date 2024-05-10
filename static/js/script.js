@@ -25,6 +25,16 @@ class Engine
         this.projectionMatrix = mat4.create(),
         this.normalMatrix = mat4.create();
         this.entities = [];
+
+        this.shininess = 10;
+        this.clearColor = [0.9, 0.9, 0.9];
+        this.lightColor = [1, 1, 1, 1];
+        this.lightAmbient = [0.03, 0.03, 0.03, 1];
+        this.lightSpecular = [1, 1, 1, 1];
+        this.lightDirection = [-0.25, -0.25, -0.25];
+        this.materialDiffuse = [46 / 256, 99 / 256, 191 / 256, 1];
+        this.materialAmbient = [1, 1, 1, 1];
+        this.materialSpecular = [1, 1, 1, 1];
     }
 
     initialize(){
@@ -45,7 +55,7 @@ class Engine
     }
 
     render(){
-        window.requestAnimationFrame(this.render);
+        requestAnimationFrame(this.render.bind(this));
         this.draw();
     }
 
@@ -64,7 +74,7 @@ class Engine
 
         let ball = new Ball(this);
 
-        let cone = new Cone(this);
+        //let cone = new Cone(this);
     }
 
     createSingleBuffer(entity){
@@ -131,7 +141,7 @@ class Engine
         mat4.transpose(this.normalMatrix, this.normalMatrix);
 
         gl.uniformMatrix4fv(this.program.uModelViewMatrix, false, this.modelViewMatrix);
-        //gl.uniformMatrix4fv(this.program.uNormalMatrix, false, this.normalMatrix);
+        gl.uniformMatrix4fv(this.program.uNormalMatrix, false, this.normalMatrix);
         gl.uniformMatrix4fv(this.program.uProjectionMatrix, false, this.projectionMatrix);
   
         // We will start using the `try/catch` to capture any errors from our `draw` calls
@@ -140,7 +150,7 @@ class Engine
                 // Bind
                 gl.bindVertexArray(entity.vao);
                 // Draw
-                gl.drawElements(gl.LINE_LOOP, entity.indices.length, gl.UNSIGNED_SHORT, 0);
+                gl.drawElements(gl.TRIANGLES, entity.indices.length, gl.UNSIGNED_SHORT, 0);
         
                 // Clean
                 gl.bindVertexArray(null);
@@ -155,10 +165,14 @@ class Engine
     initLights(){
         let gl = this.gl;
 
-        gl.uniform3fv(this.program.uLightDirection, [0, 0, -1]);
-        gl.uniform4fv(this.program.uLightAmbient, [0.01, 0.01, 0.01, 1]);
-        gl.uniform4fv(this.program.uLightDiffuse, [0.5, 0.5, 0.5, 1]);
-        gl.uniform4fv(this.program.uMaterialDiffuse, [0.5, 0.5, 0.8, 1]);
+        gl.uniform4fv(this.program.uLightDiffuse, this.lightColor);
+        gl.uniform4fv(this.program.uLightAmbient, this.lightAmbient);
+        gl.uniform4fv(this.program.uLightSpecular, this.lightSpecular);
+        gl.uniform3fv(this.program.uLightDirection, this.lightDirection);
+        gl.uniform4fv(this.program.uMaterialDiffuse, this.materialDiffuse);
+        gl.uniform4fv(this.program.uMaterialAmbient, this.materialAmbient);
+        gl.uniform4fv(this.program.uMaterialSpecular, this.materialSpecular);
+        gl.uniform1f(this.program.uShininess, this.shininess);
     }
     
     createProgram(vertexShader, fragmentShader){
@@ -192,6 +206,7 @@ class Engine
         this.program.uMaterialAmbient = gl.getUniformLocation(this.program, 'uMaterialAmbient');
         this.program.uMaterialDiffuse = gl.getUniformLocation(this.program, 'uMaterialDiffuse');
         this.program.uMaterialSpecular = gl.getUniformLocation(this.program, 'uMaterialSpecular');
+        this.program.uShininess = gl.getUniformLocation(this.program, 'uShininess');
     }
     
     createShader(id){
