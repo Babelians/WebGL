@@ -5,7 +5,7 @@ class Component{
         this.cassName = "Component";
     }
 
-    update(){
+    update(deltaTime){
 
     }
 

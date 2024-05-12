@@ -5,6 +5,7 @@ class Entity{
         this.engine = engine;
         this.components = [];
         this.position = new Vec3(0,0,0);
+        this.moveVector = new Vec3(0,0,0);
         this.vertices = [];
         this.indices = [];
         this.color = [];
@@ -24,5 +25,14 @@ class Entity{
         }
     }
 
-    update(){}
+    updateComponents(deltaTime){
+        for(let comp of this.components){
+            comp.update(deltaTime);
+        }
+    }
+
+    update(deltaTime){
+        this.updateComponents(deltaTime);
+        this.position = Vec3.add(this.position, this.moveVector);
+    }
 }
