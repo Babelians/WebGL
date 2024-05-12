@@ -12,10 +12,6 @@ class Ball extends Entity{
     
     update(deltaTime){
         super.update(deltaTime);
-        //
-        if(this.position.y<=0 && this.moveVector.y < 0){
-            this.position.z -= 0.1;
-        }
         // バウンド
         if(this.position.y < 0){
             this.moveVector.y *= -1;
