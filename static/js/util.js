@@ -99,6 +99,26 @@ class Vec3{
             aVec.z - bVec.z
         );
     }
+
+    static multiple(aVec, bVec){
+        return new Vec3(
+            aVec.x * bVec.x,
+            aVec.y * bVec.y,
+            aVec.z * bVec.z
+        );
+    }
+
+    static repeat(scaler){
+        return new Vec3(
+            scaler,
+            scaler,
+            scaler
+        );
+    }
+
+    static scalerMul(scaler, aVec){
+        return Vec3.multiple(Vec3.repeat(scaler), aVec);
+    }
 }
 
 class Vec4{

@@ -4,6 +4,8 @@ class Engine
         this.canvas = canvas;
         this.gl = canvas.getContext("webgl2");
 
+        this.camara = new Camera(this);
+
         this.program = null;
         this.vertexShader = null;
         this.fragmentShader = null;
@@ -30,6 +32,8 @@ class Engine
         this.shininess = 10;*/
 
         this.prevTime = 0;
+
+        this.hoge = 0;
     }
 
     initialize(){
@@ -126,12 +130,14 @@ class Engine
         // We will start using the `try/catch` to capture any errors from our `draw` calls
         try {
             const deltaTime = (Date.now() - this.prevTime) / 1000;
+            this.camara.moveVector = new Vec3(0,1,1);
+            this.camara.update(deltaTime);
             for(let entity of this.entities){
                 entity.update(deltaTime);
 
                 let copyModelViewMat = mat4.create();
-                mat4.copy(copyModelViewMat, this.modelViewMatrix); //スタックを利用したほうが早いかもしれない
-                mat4.translate(copyModelViewMat, 
+                mat4.copy(copyModelViewMat, this.modelViewMatrix);
+                mat4.translate(copyModelViewMat,
                                copyModelViewMat,
                                [entity.position.x, entity.position.y, entity.position.z]
                 );
