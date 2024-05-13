@@ -17,15 +17,17 @@ class Engine
         this.normalMatrix = mat4.create();
         this.entities = [];
 
-        this.shininess = 10;
         this.clearColor = [0.9, 0.9, 0.9];
         this.lightColor = [1, 1, 1, 1];
         this.lightAmbient = [0.03, 0.03, 0.03, 1];
         this.lightSpecular = [1, 1, 1, 1];
         this.lightDirection = [-0.25, -0.25, -0.25];
+
+        /*
         this.materialDiffuse = [1 / 256, 1 / 256, 200 / 256, 1];
         this.materialAmbient = [1, 1, 1, 1];
         this.materialSpecular = [1, 1, 1, 1];
+        this.shininess = 10;*/
 
         this.prevTime = 0;
     }
@@ -138,6 +140,12 @@ class Engine
                 mat4.invert(this.normalMatrix, this.normalMatrix);
                 mat4.transpose(this.normalMatrix, this.normalMatrix);
 
+                // set light
+                gl.uniform4fv(this.program.uMaterialDiffuse, entity.materialDiffuse);
+                gl.uniform4fv(this.program.uMaterialAmbient, entity.materialAmbient);
+                gl.uniform4fv(this.program.uMaterialSpecular, entity.materialSpecular);
+                gl.uniform1f(this.program.uShininess, entity.shininess);
+
                 gl.uniformMatrix4fv(this.program.uModelViewMatrix, false, copyModelViewMat);
                 gl.uniformMatrix4fv(this.program.uNormalMatrix, false, this.normalMatrix);
                 // Bind
@@ -164,10 +172,11 @@ class Engine
         gl.uniform4fv(this.program.uLightAmbient, this.lightAmbient);
         gl.uniform4fv(this.program.uLightSpecular, this.lightSpecular);
         gl.uniform3fv(this.program.uLightDirection, this.lightDirection);
+        /*
         gl.uniform4fv(this.program.uMaterialDiffuse, this.materialDiffuse);
         gl.uniform4fv(this.program.uMaterialAmbient, this.materialAmbient);
         gl.uniform4fv(this.program.uMaterialSpecular, this.materialSpecular);
-        gl.uniform1f(this.program.uShininess, this.shininess);
+        gl.uniform1f(this.program.uShininess, this.shininess);*/
     }
     
     createProgram(vertexShader, fragmentShader){

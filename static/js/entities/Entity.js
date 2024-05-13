@@ -8,9 +8,15 @@ class Entity{
         this.moveVector = new Vec3(0,0,0);
         this.vertices = [];
         this.indices = [];
-        this.color = [];
+        this.color = []; //頂点色
         this.vao = null;
         this.modelLoading = false;
+
+        // ライティングの変数
+        this.materialDiffuse = [1 / 256, 1 / 256, 200 / 256, 1];
+        this.materialAmbient = [1, 1, 1, 1];
+        this.materialSpecular = [1, 1, 1, 1];
+        this.shininess = 10;
     }
 
     addComponent(component){

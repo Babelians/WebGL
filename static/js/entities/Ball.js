@@ -7,6 +7,14 @@ class Ball extends Entity{
         mc.loadModel("../../static/models/ball.json");
 
         let gc = new GravityComponent(this);
+
+        // 色をランダムに決める
+        this.materialDiffuse = [
+            Math.random(),
+            Math.random(),
+            Math.random(),
+            1
+        ];
     }
 
     
