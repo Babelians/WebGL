@@ -13,7 +13,7 @@ class Entity{
         this.modelLoading = false;
 
         // ライティングの変数
-        this.materialDiffuse = [1 / 256, 1 / 256, 200 / 256, 1];
+        this.materialDiffuse = [0, 0, 0, 1];
         this.materialAmbient = [1, 1, 1, 1];
         this.materialSpecular = [1, 1, 1, 1];
         this.shininess = 10;

@@ -24,11 +24,14 @@ class RectComponent extends Component{
         this.owner.vertices = vertices;
     }
 
-    setSize(width, height){
-        this.setWidth(width);
-        this.setHeight(height);
+    update(){
+    }
 
-        this.update();
+    setSize(width, height){
+        this.width = width;
+        this.height = height;
+
+        this.updateVertices();
 
         const indices = [0, 1, 2, 2, 1, 3];
         this.owner.indices = indices;
@@ -43,6 +46,5 @@ class RectComponent extends Component{
             newColor.push(colorVec.w);
         }
         this.owner.color = newColor;
-        console.log(this.owner.color);
     }
 }

@@ -25,12 +25,6 @@ class Engine
         this.lightSpecular = [1, 1, 1, 1];
         this.lightDirection = [-0.25, -0.25, -0.25];
 
-        /*
-        this.materialDiffuse = [1 / 256, 1 / 256, 200 / 256, 1];
-        this.materialAmbient = [1, 1, 1, 1];
-        this.materialSpecular = [1, 1, 1, 1];
-        this.shininess = 10;*/
-
         this.prevTime = 0;
 
         this.hoge = 0;
@@ -116,22 +110,20 @@ class Engine
 
     draw(){
         let gl = this.gl;
+
+        const deltaTime = (Date.now() - this.prevTime) / 1000;
+
+
         const { width, height } = gl.canvas;
 
         gl.viewport(0, 0, width, height);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
         mat4.identity(this.modelViewMatrix);
-
-        mat4.perspective(this.projectionMatrix, 45 * (Math.PI / 180), width / height, 0.01, 10000);
-
-        gl.uniformMatrix4fv(this.program.uProjectionMatrix, false, this.projectionMatrix);
+        this.camara.update(deltaTime);
   
         // We will start using the `try/catch` to capture any errors from our `draw` calls
         try {
-            const deltaTime = (Date.now() - this.prevTime) / 1000;
-            this.camara.moveVector = new Vec3(0,1,1);
-            this.camara.update(deltaTime);
             for(let entity of this.entities){
                 entity.update(deltaTime);
 
