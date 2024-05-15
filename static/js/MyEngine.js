@@ -15,5 +15,8 @@ class MyEngine extends Engine{
 
         let rect = new Rect(this);
         rect.position = new Vec3(0,0,5);
+
+        let mr = new MidiReader();
+        mr.readMidi("../../static/media/midi/test.mid");
     }
 }
