@@ -8,7 +8,7 @@ class Track extends Entity{
         this.dataSize = 0;
     }
 
-    createNote(){
-        
+    addNote(note){
+        this.notes.push(note);
     }
 }

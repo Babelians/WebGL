@@ -1,9 +1,10 @@
 class Note extends Rect{
-    constructor(engine, width, height, posVec, moveVec){
+    constructor(engine){
         super(engine);
 
-        this.setSize(width, height);
-        this.position = posVec;
-        this.moveVector = moveVec;
+        this.onTime = 0;
+        this.offTime = 0;
+        this.noteNo = 0;
+        this.velocity = 0;
     }
 }
