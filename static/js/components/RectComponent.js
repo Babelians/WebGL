@@ -3,6 +3,9 @@ class RectComponent extends Component{
         super(entity);
         this.width = 0;
         this.height = 0;
+
+        const indices = [0, 1, 2, 2, 1, 3];
+        this.owner.indices = indices;
     }
 
     setWidth(width){
@@ -16,10 +19,10 @@ class RectComponent extends Component{
     updateVertices(){
         const ownerPos = this.owner.position;
         let vertices = [
-            ownerPos.x - this.width / 2, ownerPos.y - this.height / 2, 0,
-            ownerPos.x + this.width / 2, ownerPos.y - this.height / 2, 0,
-            ownerPos.x - this.width / 2, ownerPos.y + this.height / 2, 0,
-            ownerPos.x + this.width / 2, ownerPos.y + this.height / 2, 0
+            ownerPos.x - this.width / 2, ownerPos.y - this.height / 2, ownerPos.z,
+            ownerPos.x + this.width / 2, ownerPos.y - this.height / 2, ownerPos.z,
+            ownerPos.x - this.width / 2, ownerPos.y + this.height / 2, ownerPos.z,
+            ownerPos.x + this.width / 2, ownerPos.y + this.height / 2, ownerPos.z
         ];
         this.owner.vertices = vertices;
     }
@@ -30,11 +33,7 @@ class RectComponent extends Component{
     setSize(width, height){
         this.width = width;
         this.height = height;
-
         this.updateVertices();
-
-        const indices = [0, 1, 2, 2, 1, 3];
-        this.owner.indices = indices;
     }
 
     setColor(colorVec){

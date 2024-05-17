@@ -1,7 +1,7 @@
 class Camera{
     constructor(engine){
         this.engine = engine;
-        this.position = new Vec3(0,5,0);
+        this.position = new Vec3(0,0,0);
         this.moveVector = new Vec3(0,0,0);
         this.viewAngle = 45 * (Math.PI / 180);
     }

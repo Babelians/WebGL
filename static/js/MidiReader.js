@@ -40,7 +40,7 @@ class MidiReader{
         return result;
     }
 
-    extractArr(arr){
+    extract8Arr(arr){
         let result = 0;
         for(let i = 0; i < arr.length; ++i){
             result += arr[i] * Math.pow(256, arr.length -1 - i);
@@ -57,10 +57,10 @@ class MidiReader{
 
         this.headerChunk = {
             chunk : this.read(4),
-            dataSize : this.extractArr(this.read(4)),
-            format : this.extractArr(this.read(2)),
-            trackCount : this.extractArr(this.read(2)),
-            timeBase : this.extractArr(this.read(2))
+            dataSize : this.extract8Arr(this.read(4)),
+            format : this.extract8Arr(this.read(2)),
+            trackCount : this.extract8Arr(this.read(2)),
+            timeBase : this.extract8Arr(this.read(2))
         };
 
         let trackCount = this.headerChunk.trackCount;
@@ -85,6 +85,8 @@ class MidiReader{
                     for(let i = 0; i < pendingNotes.length; ++i){
                         if(pendingNotes[i].noteNo == secondByte){
                             pendingNotes[i].offTime = timeSum;
+                            pendingNotes[i].form();
+                            pendingNotes[i].modelLoading = false;
                             track.addNote(pendingNotes[i]);
                             pendingNotes.slice(i,1);
                             break;
@@ -92,6 +94,7 @@ class MidiReader{
                     }
                 }else if(16*9 <= firstByte && firstByte <= 16*9 + 15){ // ノートオン
                     let note = new Note(this.engine);
+                    note.modelLoading = true;
                     note.onTime = timeSum;
                     note.noteNo = secondByte;
                     note.velocity = this.read(1)[0];
@@ -107,14 +110,12 @@ class MidiReader{
                     let data = this.read(len);
 
                     switch(secondByte){
-                        case 16*2 + 15:
+                        case 16*2 + 15: // トラック終端
                             trackEnd = true;
                             break;
                     }
                 }
             }while(!trackEnd);
-
-            console.log("FIN");
         }
     }
 }

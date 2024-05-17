@@ -1,5 +1,7 @@
 class Entity{
     constructor(engine){
+        this.className = "Entity";
+        
         engine.addEntity(this);
 
         this.engine = engine;

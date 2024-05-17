@@ -15,7 +15,11 @@ class Rect extends Entity{
         this.rc.setSize(width, height);
     }
 
-    setSize(sizeVec){
-        this.rc.setSize(sizeVec.x, sizeVec.y);
+    setHeight(height){
+        this.rc.height = height;
+    }
+
+    setWidth(width){
+        this.rc.width = width;
     }
 }
