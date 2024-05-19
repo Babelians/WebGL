@@ -41,6 +41,6 @@ class Entity{
 
     update(deltaTime){
         this.updateComponents(deltaTime);
-        this.position = Vec3.add(this.position, this.moveVector);
+        this.position = Vec3.add(this.position, Vec3.scalerMul(deltaTime, this.moveVector));
     }
 }

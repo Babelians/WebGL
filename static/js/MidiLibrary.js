@@ -1,23 +1,20 @@
-class MyEngine extends Engine{
+class MidiLibrary extends Engine{
     constructor(canvas){
         super(canvas);
+
+        this.camara.moveVector = new Vec3(0,0,0);
+        this.camara.position = new Vec3(70, 0 ,100);
     }
 
     loadModels(){
-        for(let i = 0; i < 1000; ++i){
-            let ball = new Ball(this);
-            ball.position = new Vec3(100 * (Math.random() - Math.random()),
-                                     200 * Math.random(), 
-                                    -50 - 80 * (Math.random() - Math.random())
-            );
-        }
+        let mr = new MidiReader(this);
+        mr.readMidi("../../static/media/midi/test.mid");
     }
 
     draw(){
         let gl = this.gl;
 
         const deltaTime = (Date.now() - this.prevTime) / 1000;
-
 
         const { width, height } = gl.canvas;
 
@@ -32,7 +29,7 @@ class MyEngine extends Engine{
             for(let entity of this.entities){
                 entity.update(deltaTime);
 
-                if(!entity.modelLoading && entity.className === "Note")console.log(entity);
+                //if(!entity.modelLoading && entity.className === "Note")console.log(entity);
 
                 let copyModelViewMat = mat4.create();
                 mat4.copy(copyModelViewMat, this.modelViewMatrix);

@@ -1,11 +1,12 @@
 class Track extends Entity{
-    constructor(engine){
+    constructor(engine, conductor){
         super(engine);
 
         this.notes = [];
 
         this.chunkType = [];
         this.dataSize = 0;
+        this.conductor = conductor;
     }
 
     addNote(note){
