@@ -3,11 +3,11 @@ class Blackkey extends Pianokey{
         super(engine, noteNo);
         this.setSize(Blackkey.getWidth(), Blackkey.getHeight());
 
-        this.setColor(new Vec4(0,1,0,1));
+        this.setColor(new Vec4(0,0,0,1));
     }
 
     static getWidth(){
-        return 0.009;
+        return 0.014;
     }
 
     static getHeight(){

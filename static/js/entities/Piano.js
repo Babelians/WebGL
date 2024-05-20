@@ -11,7 +11,7 @@ class Piano{
             }else{
                 let blackkey = new Blackkey(engine, noteNo);
                 let x = Piano.culcKeyPositionX(noteNo);
-                let y =  0.09+(Whitekey.getHeight() - Blackkey.getHeight()) / 2;
+                let y =  (Whitekey.getHeight() - Blackkey.getHeight()) / 2;
                 blackkey.position = new Vec3(x, y, 0);
                 this.blackkeys.push(blackkey);
             }

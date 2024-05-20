@@ -1,10 +1,8 @@
 class Whitekey extends Pianokey{
     constructor(engine, noteNo){
-        super(engine, noteNo);
+        super(engine, noteNo, 99);
         this.setSize(Whitekey.getWidth(), Whitekey.getHeight());
         this.crevice = Whitekey.getCrevice();
-
-        this.updateOrder = 99;
     }
 
     static getWidth(){

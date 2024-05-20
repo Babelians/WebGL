@@ -1,7 +1,9 @@
 class Entity{
-    constructor(engine){
+    constructor(engine, updateOrder = 100){
         this.className = "Entity";
         
+        this.updateOrder = updateOrder;
+
         engine.addEntity(this);
 
         this.engine = engine;
@@ -13,7 +15,6 @@ class Entity{
         this.color = []; //頂点色
         this.vao = null;
         this.modelLoading = false;
-        this.drawOrder = 100;
 
         // ライティングの変数
         this.materialDiffuse = [0, 0, 0, 1];

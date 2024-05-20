@@ -1,6 +1,6 @@
 class Rect extends Entity{
-    constructor(engine){
-        super(engine);
+    constructor(engine, updateOrder = 100){
+        super(engine, updateOrder);
 
         this.rc = new RectComponent(this);
         this.rc.setSize(10, 10);

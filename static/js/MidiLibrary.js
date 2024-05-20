@@ -10,7 +10,9 @@ class MidiLibrary extends Engine{
         let piano = new Piano(this);
 
         let mr = new MidiReader(this);
-        mr.readMidi("../../static/media/midi/test.mid");
+        mr.readMidi("../../static/media/midi/test2.mid");
+
+        console.log(this.entities);
     }
 
     draw(){
