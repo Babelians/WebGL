@@ -3,10 +3,12 @@ class MidiLibrary extends Engine{
         super(canvas);
 
         this.camara.moveVector = new Vec3(0,0,0);
-        this.camara.position = new Vec3(70, 0 ,100);
+        this.camara.position = new Vec3(0.58, 0.25 ,1);
     }
 
     loadModels(){
+        let piano = new Piano(this);
+
         let mr = new MidiReader(this);
         mr.readMidi("../../static/media/midi/test.mid");
     }

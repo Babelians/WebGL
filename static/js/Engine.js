@@ -54,7 +54,17 @@ class Engine
     }
 
     addEntity(entity){
-        this.entities.push(entity);
+        //this.entities.push(entity);
+
+        let pos = 0;
+        for(let i = 0; i < this.entities.length; ++i){
+            pos = i;
+            if(entity.updateOrder <= this.entities[i].updateOrder){
+                break;
+            }
+        }
+
+        this.entities.splice(pos, 0, entity);
     }
 
     loadModels(){

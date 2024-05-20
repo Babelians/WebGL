@@ -11,15 +11,23 @@ class Note extends Rect{
 
         this.modelLoading = true;
 
-        this.scaringRate = 1/50;
+        this.scaringRate = 1/4000;
     }
 
     form(){
         let timeSub = this.offTime - this.onTime;
         let height = timeSub * this.scaringRate;
-        let width = 2;
+
+        let width = 0;
+        if(Piano.isWhitekey(this.noteNo)){
+            width = Whitekey.getWidth();
+        }else{
+            width = Blackkey.getWidth();
+        }
+
+        let x = Piano.culcKeyPositionX(this.noteNo);
         this.setSize(width, height);
-        this.position = new Vec3(this.noteNo*width + width / 2,this.onTime * this.scaringRate + height / 2, 0);
+        this.position = new Vec3(x, this.onTime * this.scaringRate + height / 2, 0);
 
         this.engine.createSingleBuffer(this);
     }

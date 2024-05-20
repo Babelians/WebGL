@@ -17,12 +17,11 @@ class RectComponent extends Component{
     }
 
     updateVertices(){
-        const ownerPos = this.owner.position;
         let vertices = [
-            ownerPos.x - this.width / 2, ownerPos.y - this.height / 2, ownerPos.z,
-            ownerPos.x + this.width / 2, ownerPos.y - this.height / 2, ownerPos.z,
-            ownerPos.x - this.width / 2, ownerPos.y + this.height / 2, ownerPos.z,
-            ownerPos.x + this.width / 2, ownerPos.y + this.height / 2, ownerPos.z
+            - this.width / 2, - this.height / 2, 0,
+            + this.width / 2, - this.height / 2, 0,
+            - this.width / 2, + this.height / 2, 0,
+            + this.width / 2, + this.height / 2, 0
         ];
         this.owner.vertices = vertices;
     }
