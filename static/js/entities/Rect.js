@@ -22,4 +22,12 @@ class Rect extends Entity{
     setWidth(width){
         this.rc.width = width;
     }
+
+    getHeight(){
+        return this.rc.height;
+    }
+
+    getWidth(){
+        return this.rc.width;
+    }
 }

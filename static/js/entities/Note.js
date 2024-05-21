@@ -1,6 +1,6 @@
 class Note extends Rect{
     constructor(engine, track){
-        super(engine,98);
+        super(engine,97);
 
         this.track = track;
         this.className = "Note";
@@ -29,7 +29,22 @@ class Note extends Rect{
         this.setSize(width, height);
         this.position = new Vec3(x, this.onTime * this.scaringRate + height / 2, 0);
 
+        this.attachCrevice(); // ノート間の隙間を適用
+
         this.engine.createSingleBuffer(this);
+    }
+
+    attachCrevice(){ // サイズとポジションを設定した後に実行可能
+        let height = this.getHeight() - Note.getCrevice();
+        if(Note.getCrevice() < height){
+            let width = this.getWidth();
+            this.setSize(width, height);
+            this.position.y -= Note.getCrevice() / 2;
+        }
+    }
+
+    static getCrevice(){
+        return 0.002;
     }
 
     culcMoveVector(){

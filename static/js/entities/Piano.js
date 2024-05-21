@@ -1,21 +1,22 @@
 class Piano{
     constructor(engine){
-        this.whitekeys = [];
-        this.blackkeys = [];
+        this.keys = [];
         for(let noteNo = 21; noteNo <= 108; ++noteNo){
             if(Piano.isWhitekey(noteNo)){
                 let whitekey = new Whitekey(engine, noteNo);
                 let x = Piano.culcKeyPositionX(noteNo);
                 whitekey.position = new Vec3(x, 0, 0);
-                this.whitekeys.push(whitekey);
+                this.keys.push(whitekey);
             }else{
                 let blackkey = new Blackkey(engine, noteNo);
                 let x = Piano.culcKeyPositionX(noteNo);
                 let y =  (Whitekey.getHeight() - Blackkey.getHeight()) / 2;
                 blackkey.position = new Vec3(x, y, 0);
-                this.blackkeys.push(blackkey);
+                this.keys.push(blackkey);
             }
         }
+
+        new PianoBackRect(engine);
     }
 
     static countWhiteKey(noteNo){

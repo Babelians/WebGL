@@ -54,8 +54,6 @@ class Engine
     }
 
     addEntity(entity){
-        //this.entities.push(entity);
-
         let pos = 0;
         for(; pos < this.entities.length; ++pos){
             if(entity.updateOrder > this.entities[pos].updateOrder){
