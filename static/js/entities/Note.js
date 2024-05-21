@@ -1,6 +1,6 @@
 class Note extends Rect{
     constructor(engine, track){
-        super(engine);
+        super(engine,98);
 
         this.track = track;
         this.className = "Note";
