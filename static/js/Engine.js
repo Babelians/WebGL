@@ -57,9 +57,8 @@ class Engine
         //this.entities.push(entity);
 
         let pos = 0;
-        for(let i = 0; i < this.entities.length; ++i){
-            pos = i;
-            if(entity.updateOrder > this.entities[i].updateOrder){
+        for(; pos < this.entities.length; ++pos){
+            if(entity.updateOrder > this.entities[pos].updateOrder){
                 break;
             }
         }
