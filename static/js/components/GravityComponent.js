@@ -6,6 +6,6 @@ class GravityComponent extends Component{
     static GRAVITY = 9.80665;
 
     update(deltaTime){
-        this.owner.moveVector.y -= 2 * GravityComponent.GRAVITY * deltaTime/10;
+        this.owner.moveVector.y -= 2 * GravityComponent.GRAVITY * deltaTime;
     }
 }

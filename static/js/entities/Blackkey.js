@@ -6,6 +6,10 @@ class Blackkey extends Pianokey{
         this.setColor(new Vec4(0,0,0,1));
     }
 
+    getInitialColor(){
+        return new Vec4(0,0,0,1);
+    }
+
     static getWidth(){
         return 0.014;
     }

@@ -7,7 +7,7 @@ class PianoBackRect extends Rect{
 
         this.setSize(width, height);
 
-        this.setPosition( new Vec3(width/2 - Whitekey.getWidth()/2, 0, 0) );
+        this.setPosition( new Vec3(width/2 - Whitekey.getWidth()/2, Whitekey.getPostionY(), 0) );
 
         this.setColor(new Vec4(0,0,0,1));
     }

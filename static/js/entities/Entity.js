@@ -27,6 +27,10 @@ class Entity{
         this.components.push(component);
     }
 
+    getComponents(){
+        return this.components;
+    }
+
     setPosition(posVec){
         this.position = posVec;
 

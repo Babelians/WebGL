@@ -1,18 +1,25 @@
 class Piano{
     constructor(engine){
+        let processSignal = engine.getProcessSignal();
+
         this.keys = [];
         for(let noteNo = 21; noteNo <= 108; ++noteNo){
             if(Piano.isWhitekey(noteNo)){
                 let whitekey = new Whitekey(engine, noteNo);
                 let x = Piano.culcKeyPositionX(noteNo);
-                whitekey.position = new Vec3(x, 0, 0);
+                let y = Whitekey.getPostionY();
+                whitekey.position = new Vec3(x, y, 0);
                 this.keys.push(whitekey);
+
+                processSignal.addDst(whitekey);
             }else{
                 let blackkey = new Blackkey(engine, noteNo);
                 let x = Piano.culcKeyPositionX(noteNo);
-                let y =  (Whitekey.getHeight() - Blackkey.getHeight()) / 2;
+                let y =  (Whitekey.getHeight() - Blackkey.getHeight()) / 2 + Whitekey.getPostionY();
                 blackkey.position = new Vec3(x, y, 0);
                 this.keys.push(blackkey);
+
+                processSignal.addDst(blackkey);
             }
         }
 

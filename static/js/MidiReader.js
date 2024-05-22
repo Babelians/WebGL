@@ -7,7 +7,7 @@ class MidiReader{
         this.pointer = 0;
         this.headerChunk = {};
         this.tracks = [];
-        this.conductor = new Conductor();
+        this.conductor = engine.conductor;
     }
 
     read(step){
@@ -61,13 +61,15 @@ class MidiReader{
             dataSize : this.extract8Arr(this.read(4)),
             format : this.extract8Arr(this.read(2)),
             trackCount : this.extract8Arr(this.read(2)),
-            timeBase : this.extract8Arr(this.read(2))
+            timeBase : this.extract8Arr(this.read(2)) //1拍の分解能
         };
 
         this.conductor.headerChunk = this.headerChunk;
 
         let trackCount = this.headerChunk.trackCount;
         let timeBase = this.headerChunk.timeBase;
+
+        let processSignal = this.engine.getProcessSignal();
 
         for(let t = 0; t < trackCount; ++t){
             let track = new Track(this.engine, this.conductor);
@@ -88,10 +90,11 @@ class MidiReader{
                     let velocity = this.read(1)[0];
                     for(let i = 0; i < pendingNotes.length; ++i){
                         if(pendingNotes[i].noteNo == secondByte){
-                            pendingNotes[i].offTime = timeSum;
-                            pendingNotes[i].form();
-                            pendingNotes[i].modelLoading = false;
                             track.addNote(pendingNotes[i]);
+                            pendingNotes[i].offTime = timeSum;
+                            pendingNotes[i].modelLoading = false;
+                            pendingNotes[i].form();
+                            processSignal.addSrc(pendingNotes[i]);
                             pendingNotes.splice(i,1);
                             break;
                         }
@@ -117,7 +120,7 @@ class MidiReader{
                         case 16*2 + 15: // トラック終端
                             trackEnd = true;
                             break;
-                        case 16*5 + 1: // テンポ情報
+                        case 16*5 + 1: // テンポ情報 4分音符のマイクロ秒
                             let tempo = this.extract8Arr(data);
                             this.conductor.quaterTimes.push(tempo);
                             break;

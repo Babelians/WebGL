@@ -12,9 +12,12 @@ class Note extends Rect{
         this.modelLoading = true;
 
         this.scaringRate = 1/4000;
+
+        this.signalSrc = null;
     }
 
     form(){
+        this.signalSrc = new SignalSrcComponent(this, this.noteNo, this.onTime, this.offTime);
         let timeSub = this.offTime - this.onTime;
         let height = timeSub * this.scaringRate;
 
@@ -51,8 +54,7 @@ class Note extends Rect{
         return new Vec3(
             0,
             -this.scaringRate *
-            this.track.conductor.headerChunk.timeBase /
-            (this.track.conductor.quaterTimes[0]/1000000),
+            this.track.conductor.calcTimeBasePerSecond(),
             0
         );
     }

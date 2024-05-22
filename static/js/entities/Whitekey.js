@@ -5,6 +5,14 @@ class Whitekey extends Pianokey{
         this.crevice = Whitekey.getCrevice();
     }
 
+    getInitialColor(){
+        return new Vec4(1,1,1,1);
+    }
+
+    static getPostionY(){
+        return - this.getHeight() / 2;
+    }
+
     static getWidth(){
         return 0.0225;
     }

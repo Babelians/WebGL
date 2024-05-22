@@ -177,11 +177,6 @@ class Engine
         gl.uniform4fv(this.program.uLightAmbient, this.lightAmbient);
         gl.uniform4fv(this.program.uLightSpecular, this.lightSpecular);
         gl.uniform3fv(this.program.uLightDirection, this.lightDirection);
-        /*
-        gl.uniform4fv(this.program.uMaterialDiffuse, this.materialDiffuse);
-        gl.uniform4fv(this.program.uMaterialAmbient, this.materialAmbient);
-        gl.uniform4fv(this.program.uMaterialSpecular, this.materialSpecular);
-        gl.uniform1f(this.program.uShininess, this.shininess);*/
     }
     
     createProgram(vertexShader, fragmentShader){

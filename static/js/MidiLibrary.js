@@ -4,6 +4,14 @@ class MidiLibrary extends Engine{
 
         this.camara.moveVector = new Vec3(0,0,0);
         this.camara.position = new Vec3(0.58, 0.25 ,1);
+
+        this.processSignal = new ProcessSignal(this);
+
+        this.conductor = new Conductor();
+    }
+
+    getProcessSignal(){
+        return this.processSignal;
     }
 
     loadModels(){
@@ -11,8 +19,6 @@ class MidiLibrary extends Engine{
 
         let mr = new MidiReader(this);
         mr.readMidi("../../static/media/midi/test2.mid");
-
-        console.log(this.entities);
     }
 
     draw(){
@@ -27,6 +33,8 @@ class MidiLibrary extends Engine{
 
         mat4.identity(this.modelViewMatrix);
         this.camara.update(deltaTime);
+
+        this.processSignal.update(deltaTime);
   
         // We will start using the `try/catch` to capture any errors from our `draw` calls
         try {
