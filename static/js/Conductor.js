@@ -7,4 +7,8 @@ class Conductor{
     calcTimeBasePerSecond(){
         return this.headerChunk.timeBase / (this.quaterTimes[0]/1000000);
     }
+
+    secondToTimeBase(second){
+        return second * this.headerChunk.timeBase / (this.quaterTimes[0]/1000000);
+    }
 }

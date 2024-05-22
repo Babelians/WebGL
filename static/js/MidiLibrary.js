@@ -5,9 +5,9 @@ class MidiLibrary extends Engine{
         this.camara.moveVector = new Vec3(0,0,0);
         this.camara.position = new Vec3(0.58, 0.25 ,1);
 
-        this.processSignal = new ProcessSignal(this);
-
         this.conductor = new Conductor();
+
+        this.processSignal = new ProcessSignal(this);
     }
 
     getProcessSignal(){

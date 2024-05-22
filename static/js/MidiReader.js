@@ -7,7 +7,7 @@ class MidiReader{
         this.pointer = 0;
         this.headerChunk = {};
         this.tracks = [];
-        this.conductor = engine.conductor;
+        this.conductor = this.engine.conductor;
     }
 
     read(step){

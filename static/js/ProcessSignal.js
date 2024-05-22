@@ -6,6 +6,8 @@ class ProcessSignal{
         this.engine = engine;
 
         this.conductor = engine.conductor;
+
+        this.timeSum = 0;
     }
 
     addSrc(entity){
@@ -27,10 +29,12 @@ class ProcessSignal{
     }
 
     update(deltaTime){
+        /*
+        this.timeSum += deltaTime;
         let signaledEntity = [];
         for(let src of this.srcs){ //シグナル発令
-            if(src.signalSrc.onTime <= deltaTime * this.conductor.calcTimeBasePerSecond() && 
-                deltaTime * this.conductor.calcTimeBasePerSecond() <= src.signalSrc.offTime){
+            if(src.signalSrc.onTime <= this.conductor.secondToTimeBase(this.timeSum) &&
+                this.conductor.secondToTimeBase(this.timeSum) <= src.signalSrc.offTime){
                 signaledEntity.push(src);
             }
         }
@@ -42,12 +46,17 @@ class ProcessSignal{
                     isSignal = true;
                     let color = sigEnt.color;
                     dst.setColor(color);
+                    this.engine.createSingleBuffer(dst);
+                    break;
                 }
             }
 
             if(!isSignal){
                 dst.setColor(dst.getInitialColor());
+                this.engine.createSingleBuffer(dst);
             }
+            
         }
+        */
     }
 }
