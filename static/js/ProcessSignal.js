@@ -29,7 +29,7 @@ class ProcessSignal{
     }
 
     update(deltaTime){
-        /*
+        
         this.timeSum += deltaTime;
         let signaledEntity = [];
         for(let src of this.srcs){ //シグナル発令
@@ -44,19 +44,17 @@ class ProcessSignal{
             for(let sigEnt of signaledEntity){
                 if(dst.signalDst.no == sigEnt.signalSrc.no){
                     isSignal = true;
-                    let color = sigEnt.color;
-                    dst.setColor(color);
-                    this.engine.createSingleBuffer(dst);
+                    let color = sigEnt.getDiffuse();
+                    dst.setDiffuse(color);
                     break;
                 }
             }
 
             if(!isSignal){
-                dst.setColor(dst.getInitialColor());
-                this.engine.createSingleBuffer(dst);
+                dst.setDiffuse(dst.getInitialColor());
             }
             
         }
-        */
+        
     }
 }

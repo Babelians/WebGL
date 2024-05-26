@@ -120,7 +120,7 @@ class Engine
         let gl = this.gl;
 
         const deltaTime = (Date.now() - this.prevTime) / 1000;
-
+        this.prevTime = Date.now();
 
         const { width, height } = gl.canvas;
 
@@ -130,11 +130,13 @@ class Engine
         mat4.identity(this.modelViewMatrix);
         this.camara.update(deltaTime);
   
-        // We will start using the `try/catch` to capture any errors from our `draw` calls
         try {
             for(let entity of this.entities){
                 entity.update(deltaTime);
 
+                if(entity.visible){
+                    continue;
+                }
                 let copyModelViewMat = mat4.create();
                 mat4.copy(copyModelViewMat, this.modelViewMatrix);
                 mat4.translate(copyModelViewMat,
@@ -167,8 +169,6 @@ class Engine
         catch (error) {
           console.error(error);
         }
-
-        this.prevTime = Date.now();
     }
 
     initLights(){

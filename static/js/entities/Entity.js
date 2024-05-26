@@ -10,6 +10,7 @@ class Entity{
         this.components = [];
         this.position = new Vec3(0,0,0);
         this.moveVector = new Vec3(0,0,0);
+        this.visible = true;
         this.vertices = [];
         this.indices = [];
         this.color = []; //頂点色
@@ -21,6 +22,24 @@ class Entity{
         this.materialAmbient = [1, 1, 1, 1];
         this.materialSpecular = [1, 1, 1, 1];
         this.shininess = 10;
+    }
+
+    setDiffuse(colorVec){
+        this.materialDiffuse = [
+            colorVec.x,
+            colorVec.y,
+            colorVec.z,
+            colorVec.w
+        ];
+    }
+
+    getDiffuse(){
+        return new Vec4(
+            this.materialDiffuse[0],
+            this.materialDiffuse[1],
+            this.materialDiffuse[2],
+            this.materialDiffuse[3]
+        );
     }
 
     addComponent(component){

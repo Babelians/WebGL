@@ -9,10 +9,12 @@ class Track extends Entity{
         this.conductor = conductor;
 
         this.noteColor = noteColor;
+
+        this.visible = false;
     }
 
     addNote(note){
-        note.setColor(this.noteColor);
+        note.setDiffuse(this.noteColor);
         this.notes.push(note);
     }
 }

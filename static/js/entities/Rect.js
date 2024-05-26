@@ -4,7 +4,7 @@ class Rect extends Entity{
 
         this.rc = new RectComponent(this);
         this.rc.setSize(10, 10);
-        this.rc.setColor(new Vec4(1,1,1,1));
+        this.rc.setColor(new Vec4(0,0,0,1));
     }
 
     setColor(colorVec){

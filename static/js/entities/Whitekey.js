@@ -3,6 +3,7 @@ class Whitekey extends Pianokey{
         super(engine, noteNo, 99);
         this.setSize(Whitekey.getWidth(), Whitekey.getHeight());
         this.crevice = Whitekey.getCrevice();
+        this.setDiffuse(new Vec4(1,1,1,1));
     }
 
     getInitialColor(){

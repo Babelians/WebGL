@@ -11,7 +11,7 @@ class Note extends Rect{
 
         this.modelLoading = true;
 
-        this.scaringRate = 1/4000;
+        this.scaringRate = 1/6000;
 
         this.signalSrc = null;
     }
@@ -63,5 +63,12 @@ class Note extends Rect{
         this.updateComponents(deltaTime);
         this.moveVector = this.culcMoveVector();
         this.position = Vec3.add(this.position, Vec3.scalerMul(deltaTime, this.moveVector));
+
+        
+        if(this.position.y + (this.offTime - this.onTime)*this.scaringRate/2 < 0){
+            this.visible = false;
+        }else{
+            this.visible = true;
+        }
     }
 }

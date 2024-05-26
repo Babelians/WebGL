@@ -3,11 +3,18 @@ class MidiLibrary extends Engine{
         super(canvas);
 
         this.camara.moveVector = new Vec3(0,0,0);
-        this.camara.position = new Vec3(0.58, 0.25 ,1);
+        this.camara.position = new Vec3(0.599, 0.232 ,0.926);
 
         this.conductor = new Conductor();
 
         this.processSignal = new ProcessSignal(this);
+
+
+        this.clearColor = [0.9, 0.9, 0.9];
+        this.lightColor = [1, 1, 1, 1];
+        this.lightAmbient = [0.15, 0.15, 0.15, 15];
+        this.lightSpecular = [1, 1, 1, 1];
+        this.lightDirection = [-0.25, -0.25, -0.25];
     }
 
     getProcessSignal(){
@@ -21,27 +28,38 @@ class MidiLibrary extends Engine{
         mr.readMidi("../../static/media/midi/test2.mid");
     }
 
+    run(){
+        let gl = this.gl;
+        const { width, height } = gl.canvas;
+        gl.viewport(0, 0, width, height);
+        mat4.identity(this.modelViewMatrix);
+        this.camara.update(0);
+        this.prevTime = Date.now();
+        this.render();
+    }
+
+    render(){
+        requestAnimationFrame(this.render.bind(this));
+        this.draw();
+    }
+
     draw(){
         let gl = this.gl;
 
         const deltaTime = (Date.now() - this.prevTime) / 1000;
+        this.prevTime = Date.now();
 
-        const { width, height } = gl.canvas;
-
-        gl.viewport(0, 0, width, height);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-        mat4.identity(this.modelViewMatrix);
-        this.camara.update(deltaTime);
-
         this.processSignal.update(deltaTime);
-  
-        // We will start using the `try/catch` to capture any errors from our `draw` calls
+
         try {
             for(let entity of this.entities){
                 entity.update(deltaTime);
 
-                //if(!entity.modelLoading && entity.className === "Note")console.log(entity);
+                if(!entity.visible){
+                    continue;
+                }
 
                 let copyModelViewMat = mat4.create();
                 mat4.copy(copyModelViewMat, this.modelViewMatrix);
@@ -75,7 +93,5 @@ class MidiLibrary extends Engine{
         catch (error) {
           console.error(error);
         }
-
-        this.prevTime = Date.now();
     }
 }
