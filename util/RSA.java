@@ -1,14 +1,22 @@
+/*
+ * 
+ * 暗号化はRSA.encrypt(message);
+ * 複合はRSA.decrypt(message);で行う
+ * 
+ */
+
 package util;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RSA {
-	private static final long P = 7L;
-	private static final long Q = 5L;
-	private static final long N = P * Q;
-	private static final long E = 5;
-	private static final long D = 5L;//RSA.generateD(P, Q, E);
+	//P, Qを5桁以上で作ると桁あふれの可能性がある
+	private static final long P = 4561L; //RSA.generateP(keta);
+	private static final long Q = 5059L; //RSA.generateQ(keta);
+	private static final long N = P * Q; 
+	private static final long E = 7L; //RSA.generateE(P, Q);
+	private static final long D = 13179703L;//RSA.generateD(P, Q, E);
 	
 	public static long generateP(int keta) {
 		long p = 0;
@@ -39,11 +47,17 @@ public class RSA {
 		List<Long> factList = factorizate(N);
 		
 		for(long i = 3; i < N; i+= 2) {
+			List<Long> factList2 = factorizate(i);
 			boolean flag = false;
 			for(long f : factList) {
-				if(f == i) {
-					flag = true;
+				for(long g : factList2) {
+					if(f == g) {
+						flag = true;
+						break;
+					}
 				}
+				
+				if(flag)break;
 			}
 			
 			if(flag == false) {
@@ -77,11 +91,47 @@ public class RSA {
 			throw new Exception("message size is larger than P×Q!");
 		}
 		
-		return (long)Math.pow(message, E) % N;
+		return powMod(message, E, N);
+	}
+	
+	public static String encrypt(String message) {
+		char[] arr = message.toCharArray();
+		String res = "";
+		for(char c : arr) {
+			try {
+				res += encrypt(c)+",";
+			} catch (Exception e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
+		}
+		
+		return res;
 	}
 	
 	public static long decrypt(long message) {
-		return (long)Math.pow(message, D) % N;
+		return powMod(message, D, N);
+	}
+	
+	public static String decrypt(String message) {
+		String[] arr = message.split(",");
+		String res = "";
+		for(String s : arr) {
+			res += (char)decrypt(Long.parseLong(s));
+		}
+		
+		return res;
+	}
+	
+	public static long powMod(long a, long b, long c) {
+		long res = a;
+		do {
+			res %= c;
+			--b;
+			if(0 < b)res *= (a % c);
+		}while(0 < b);
+		
+		return res;
 	}
 	
 	public static long generateD(long P, long Q, long E) {
