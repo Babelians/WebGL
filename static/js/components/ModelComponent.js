@@ -1,4 +1,6 @@
-class ModelComponent extends Component{
+import Component from "./Component.js";
+
+export default class ModelComponent extends Component{
     constructor(entity){
         super(entity);
         this.className = "ModelComponent";

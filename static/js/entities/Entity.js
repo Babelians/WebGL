@@ -1,4 +1,6 @@
-class Entity{
+import { Vec3, Vec4 } from "../math.js";
+
+export default class Entity{
     constructor(engine, updateOrder = 100){
         this.className = "Entity";
         
@@ -9,6 +11,7 @@ class Entity{
         this.engine = engine;
         this.components = [];
         this.position = new Vec3(0,0,0);
+        this.scale = new Vec3(1,1,1);
         this.moveVector = new Vec3(0,0,0);
         this.visible = true;
         this.vertices = [];

@@ -1,4 +1,11 @@
-class Note extends Rect{
+import Rect from "./Rect.js";
+import Piano from "./Piano.js";
+import SignalSrcComponent from "../components/SignalSrcComponent.js";
+import { Vec3 } from "../math.js";
+import Whitekey from "./Whitekey.js";
+import Blackkey from "./Blackkey.js";
+
+export default class Note extends Rect{
     constructor(engine, track){
         super(engine,97);
 

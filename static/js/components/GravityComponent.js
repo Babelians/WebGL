@@ -1,4 +1,6 @@
-class GravityComponent extends Component{
+import Component from "./Component.js";
+
+export default class GravityComponent extends Component{
     constructor(entity){
         super(entity);
     }

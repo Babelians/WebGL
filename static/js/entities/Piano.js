@@ -1,4 +1,9 @@
-class Piano{
+import Whitekey from "./Whitekey.js";
+import Blackkey from "./Blackkey.js";
+import { Vec3 } from "../math.js";
+import PianoBackRect from "./PianoBackRect.js";
+
+export default class Piano{
     constructor(engine){
         let processSignal = engine.getProcessSignal();
 
@@ -24,6 +29,18 @@ class Piano{
         }
 
         new PianoBackRect(engine);
+    }
+
+    static getWidth(){
+        return (Whitekey.getWidth() + Whitekey.getCrevice())* 52 - Whitekey.getCrevice();
+    }
+
+    static getHeight(){
+        return Whitekey.getHeight();
+    }
+
+    static getPosition(){
+        return new Vec3(this.getWidth() / 2 - Whitekey.getWidth()/2, Whitekey.getPostionY(), 0);
     }
 
     static countWhiteKey(noteNo){

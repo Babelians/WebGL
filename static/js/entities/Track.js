@@ -1,4 +1,7 @@
-class Track extends Entity{
+import Entity from "./Entity.js";
+import { Vec4 } from "../math.js";
+
+export default class Track extends Entity{
     constructor(engine, conductor, noteColor=new Vec4(0,1,0,1)){
         super(engine);
 

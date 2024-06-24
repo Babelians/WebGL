@@ -1,4 +1,6 @@
-class MyEngine extends Engine{
+import Engine from "./Engine.js";
+
+export class MyEngine extends Engine{
     constructor(canvas){
         super(canvas);
     }
@@ -44,6 +46,9 @@ class MyEngine extends Engine{
                 mat4.copy(this.normalMatrix, copyModelViewMat);
                 mat4.invert(this.normalMatrix, this.normalMatrix);
                 mat4.transpose(this.normalMatrix, this.normalMatrix);
+
+                // attach scale
+                gl.uniform3fv(this.program.uScale, entity.scale.extractToArr());
 
                 // set light
                 gl.uniform4fv(this.program.uMaterialDiffuse, entity.materialDiffuse);

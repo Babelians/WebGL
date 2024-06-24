@@ -1,4 +1,12 @@
-class MidiLibrary extends Engine{
+import Engine from "./Engine.js";
+import Piano from "./entities/Piano.js";
+import MidiReader from "./MidiReader.js";
+import { Vec3 } from "./math.js";
+import Conductor from "./Conductor.js";
+import ProcessSignal from "./ProcessSignal.js";
+import SeekBar from "./entities/SeekBar.js";
+
+export default class MidiLibrary extends Engine{
     constructor(canvas){
         super(canvas);
 
@@ -26,6 +34,8 @@ class MidiLibrary extends Engine{
 
         let mr = new MidiReader(this);
         mr.readMidi("../../static/media/midi/test2.mid");
+
+        new SeekBar(this, this.conductor);
     }
 
     run(){
@@ -71,6 +81,9 @@ class MidiLibrary extends Engine{
                 mat4.copy(this.normalMatrix, copyModelViewMat);
                 mat4.invert(this.normalMatrix, this.normalMatrix);
                 mat4.transpose(this.normalMatrix, this.normalMatrix);
+
+                // attach scale
+                gl.uniform3fv(this.program.uScale, entity.scale.extractToArr());
 
                 // set light
                 gl.uniform4fv(this.program.uMaterialDiffuse, entity.materialDiffuse);

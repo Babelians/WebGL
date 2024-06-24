@@ -1,4 +1,4 @@
-const util = {
+const math = {
     calcNormls(posArr, indices){
         let posVecs = [];
         let normVecs = [];
@@ -30,7 +30,13 @@ const util = {
         }
 
         return res;
-    }
+    },
+
+    max(arr){
+        let max = arr[0];
+        for(let n of arr){ if(max < n) max = n;}
+        return max;
+    },
 };
 
 class Vec2{
@@ -65,6 +71,10 @@ class Vec3{
         this.x = x;
         this.y = y;
         this.z = z;
+    }
+
+    extractToArr(){
+        return [this.x, this.y, this.z];
     }
 
     normalize(){
@@ -129,3 +139,5 @@ class Vec4{
         this.w = w;
     }
 }
+
+export {math, Vec2, Vec3, Vec4};

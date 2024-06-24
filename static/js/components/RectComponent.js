@@ -1,4 +1,6 @@
-class RectComponent extends Component{
+import Component from "./Component.js";
+
+export default class RectComponent extends Component{
     constructor(entity){
         super(entity);
         this.width = 0;

@@ -1,4 +1,6 @@
-class Cone extends Entity{
+import Entity from "./Entity.js";
+
+export default class Cone extends Entity{
     constructor(engine){
         super(engine);
 

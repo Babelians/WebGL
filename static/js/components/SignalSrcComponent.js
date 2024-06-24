@@ -1,4 +1,6 @@
-class SignalSrcComponent extends Component{
+import Component from "./Component.js";
+
+export default class SignalSrcComponent extends Component{
     constructor(entity, no, onTime, offTime){
         super(entity);
         this.className = "SignalSrcComponent";

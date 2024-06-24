@@ -1,4 +1,8 @@
-class MidiReader{
+import Track from "./entities/Track.js";
+import Note from "./entities/Note.js";
+import { math } from "./math.js";
+
+export default class MidiReader{
     constructor(engine){
         this.engine = engine;
         this.fr = new FileReader();
@@ -71,6 +75,8 @@ class MidiReader{
 
         let processSignal = this.engine.getProcessSignal();
 
+        let trackFinalDeltatime = [];
+
         for(let t = 0; t < trackCount; ++t){
             let track = new Track(this.engine, this.conductor);
             this.tracks.push(track);
@@ -94,7 +100,7 @@ class MidiReader{
                             pendingNotes[i].offTime = timeSum;
                             pendingNotes[i].modelLoading = false;
                             pendingNotes[i].form();
-                            processSignal.addSrc(pendingNotes[i]);
+                            processSignal.addSrc(pendingNotes[i]); // 当たり判定シグナルに追加
                             pendingNotes.splice(i,1);
                             break;
                         }
@@ -119,6 +125,7 @@ class MidiReader{
                     switch(secondByte){
                         case 16*2 + 15: // トラック終端
                             trackEnd = true;
+                            trackFinalDeltatime.push(timeSum);
                             break;
                         case 16*5 + 1: // テンポ情報 4分音符のマイクロ秒
                             let tempo = this.extract8Arr(data);
@@ -128,5 +135,8 @@ class MidiReader{
                 }
             }while(!trackEnd);
         }
+
+        // 総再生時間の取得
+        this.conductor.setSumPlayTime(math.max(trackFinalDeltatime.slice(1))); // コンダクタートラックを除いた
     }
 }

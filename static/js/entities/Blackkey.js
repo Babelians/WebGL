@@ -1,4 +1,7 @@
-class Blackkey extends Pianokey{
+import Pianokey from "./Pianokey.js";
+import { Vec4 } from "../math.js";
+
+export default class Blackkey extends Pianokey{
     constructor(engine, noteNo){
         super(engine, noteNo);
         this.setSize(Blackkey.getWidth(), Blackkey.getHeight());

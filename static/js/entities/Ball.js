@@ -1,4 +1,6 @@
-class Ball extends Entity{
+import Entity from "./Entity.js";
+
+export default class Ball extends Entity{
     constructor(engine){
         super(engine);
 

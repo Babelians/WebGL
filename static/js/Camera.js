@@ -1,4 +1,6 @@
-class Camera{
+import { Vec3 } from "./math.js";
+
+export default class Camera{
     constructor(engine){
         this.engine = engine;
         this.position = new Vec3(0,0,0);

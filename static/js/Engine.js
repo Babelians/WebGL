@@ -1,4 +1,7 @@
-class Engine
+import Camera from "./Camera.js";
+import { math } from "./math.js";
+
+export default class Engine
 {
     constructor(canvas){
         this.canvas = canvas;
@@ -82,7 +85,7 @@ class Engine
         gl.vertexAttribPointer(this.program.aVertexPosition, 3, gl.FLOAT, false, 0, 0);
 
         // 法線
-        let norms = util.calcNormls(entity.vertices, entity.indices);
+        let norms = math.calcNormls(entity.vertices, entity.indices);
         this.normBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, this.normBuffer);
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(norms), gl.STATIC_DRAW);
@@ -148,6 +151,9 @@ class Engine
                 mat4.invert(this.normalMatrix, this.normalMatrix);
                 mat4.transpose(this.normalMatrix, this.normalMatrix);
 
+                // attach scale
+                gl.uniform3fv(this.program.uScale, entity.scale.extractToArr());
+
                 // set light
                 gl.uniform4fv(this.program.uMaterialDiffuse, entity.materialDiffuse);
                 gl.uniform4fv(this.program.uMaterialAmbient, entity.materialAmbient);
@@ -201,6 +207,7 @@ class Engine
         this.program.aVertexPosition   = gl.getAttribLocation(this.program, 'aVertexPosition');
         this.program.aVertexNormal     = gl.getAttribLocation(this.program, 'aVertexNormal');
         this.program.aVertexColor      = gl.getAttribLocation(this.program, 'aVertexColor');
+        this.program.uScale            = gl.getUniformLocation(this.program, 'uScale');
         this.program.uProjectionMatrix = gl.getUniformLocation(this.program, 'uProjectionMatrix');
         this.program.uModelViewMatrix  = gl.getUniformLocation(this.program, 'uModelViewMatrix');
         this.program.uNormalMatrix     = gl.getUniformLocation(this.program, 'uNormalMatrix');

@@ -1,3 +1,5 @@
+import MidiLibrary from "./MidiLibrary.js";
+
 onload = function(){
     let canvas = document.getElementById("canvas");
     canvas.width = 800;

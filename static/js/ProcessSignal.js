@@ -1,4 +1,4 @@
-class ProcessSignal{
+export default class ProcessSignal{
     constructor(engine){
         this.srcs = [];
         this.dsts = [];

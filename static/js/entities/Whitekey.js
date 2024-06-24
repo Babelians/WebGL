@@ -1,4 +1,7 @@
-class Whitekey extends Pianokey{
+import Pianokey from "./Pianokey.js";
+import { Vec4 } from "../math.js";
+
+export default class Whitekey extends Pianokey{
     constructor(engine, noteNo){
         super(engine, noteNo, 99);
         this.setSize(Whitekey.getWidth(), Whitekey.getHeight());

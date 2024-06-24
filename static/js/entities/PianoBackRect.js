@@ -1,4 +1,8 @@
-class PianoBackRect extends Rect{
+import Rect from "./Rect.js";
+import Whitekey from "./Whitekey.js";
+import { Vec3, Vec4 } from "../math.js";
+
+export default class PianoBackRect extends Rect{
     constructor(engine){
         super(engine, 98);
 

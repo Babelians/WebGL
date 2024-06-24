@@ -1,4 +1,6 @@
-class SpriteComponent extends Component{
+import Component from "./Component.js";
+
+export default class SpriteComponent extends Component{
     constructor(owner){
         super(owner);
     }
