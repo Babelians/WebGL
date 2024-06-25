@@ -4,6 +4,11 @@ export default class Conductor{
         this.headerChunk = null;
         this.sumPlayDeltaTime = 0;
         this.sumPlaySecond = 0;
+        this.sumDeltaTime = 0;
+    }
+
+    update(deltaTime){
+        this.sumDeltaTime += deltaTime;
     }
 
     setSumPlayTime(sumPlayDeltaTime){

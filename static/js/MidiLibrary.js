@@ -5,6 +5,7 @@ import { Vec3 } from "./math.js";
 import Conductor from "./Conductor.js";
 import ProcessSignal from "./ProcessSignal.js";
 import SeekBar from "./entities/SeekBar.js";
+import SeekBarCapsule from "./entities/SeekBarCapsule.js";
 
 export default class MidiLibrary extends Engine{
     constructor(canvas){
@@ -35,7 +36,7 @@ export default class MidiLibrary extends Engine{
         let mr = new MidiReader(this);
         mr.readMidi("../../static/media/midi/test2.mid");
 
-        new SeekBar(this, this.conductor);
+        new SeekBarCapsule(this, this.conductor);
     }
 
     run(){
@@ -61,6 +62,7 @@ export default class MidiLibrary extends Engine{
 
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
+        this.conductor.update(deltaTime);
         this.processSignal.update(deltaTime);
 
         try {

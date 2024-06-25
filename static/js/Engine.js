@@ -192,6 +192,9 @@ export default class Engine
         gl.clearColor(0, 0, 0, 1);
         gl.clearDepth(100);
         gl.enable(gl.DEPTH_TEST);
+        // alpha blend https://wgld.org/d/webgl/w029.html
+        gl.enable(gl.BLEND);
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
         this.program = gl.createProgram();
         gl.attachShader(this.program, vertexShader);
